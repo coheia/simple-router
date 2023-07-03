@@ -1,0 +1,48 @@
+{
+  "name": "@coheia/simple-router",
+  "version": "0.0.1",
+  "description": "A Vanilla SPA Router",
+  "author": {
+    "name": "Felipe Correia"
+  },
+  "readmeFilename": "README.md",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "prepublish": "tsc",
+    "publish:patch": "npm run prepublish && npm version patch && npm publish",
+    "publish:minor": "npm run prepublish && npm version minor && npm publish"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^18.13.0",
+    "typescript": "^5.1.5"
+  },
+  "keywords": [
+    "router",
+    "vanilla",
+    "spa",
+    "typescript",
+    "javascript",
+    "front-end"
+  ],
+  "tags": [
+    "router",
+    "vanilla",
+    "spa",
+    "front-end",
+    "typescript",
+    "javascript"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coheia/simple-router"
+  }
+}
