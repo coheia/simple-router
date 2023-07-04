@@ -5,7 +5,7 @@
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@coheia/simple-router?color=1bbfc1)
 ![npm](https://img.shields.io/npm/dt/@coheia/simple-router?color=6d9c29)
 
-A simple router for handling routing in a Single Page Application (SPA).
+A router for Vanilla Single Page Application.
 
 ## Table of Contents
 
@@ -31,37 +31,30 @@ import SimpleRouter from "@coheia/simple-router";
 
 ### **Usage**
 
-Implement the render method in your subclass to connect with your SPA render function:
-
-⚠️ **Attention**: In the original `SimpleRouter` class, the `render` method is not implemented. To ensure the proper functioning of the class, you need to extend `SimpleRouter` and override the `render` method with the rendering pattern specific to your SPA.
-
 ```typescript
 import SimpleRouter from "@coheia/simple-router";
-import type { Route } from "@coheia/simple-router";
 
-import NotFound from "../pages/404/404"; // Component for page NotFound, not provided by SimpleRouter
-import type { Page } from "./Page"; // The type of the component, not provided by SimpleRouter
-import { render } from "./render"; // SPA Render Method, not provided by SimpleRouter
+// The following imports are not provided by SimpleRouter:
+import NotFound from "../pages/404/404"; // Component for page NotFound
+import Home from "../pages/Home/Home"; // Component for page Home
+import Contact from "../pages/Contact/Contact"; // Component for page Contact
+import type { Page } from "./Page"; // The type of the component
+import { render } from "./render"; // SPA Render Method
 
-/**
- * Router implementation that extends SimpleRouter
- * and override the render method.
- */
-export class Router extends SimpleRouter<Page> {
-  /**
-   * Renders the specified route.
-   * @param {Route<Page> | undefined} matchingRoute - The route to render.
-   * Overrides the render method from SimpleRouter.
-   */
-  public override render(matchingRoute: Route<Page> | undefined): void {
-    if (matchingRoute != null) {
-      const { component } = matchingRoute;
-      render(component.getTemplate(), "#router");
-    } else {
-      render(new NotFound().getTemplate(), "#router");
-    }
+const renderMethod: SimpleRouter<Page>["render"] = (router) => {
+  if(router) {
+    render(router.component.getTemplate(), "#router");
+  } else {
+    render(new NotFound().getTemplate(), "#router");
   }
 }
+
+const router = new SimpleRouter<Page>(renderMethod);
+
+router.addRoute('/', new Home());
+router.addRoute('/contact', new Contact());
+
+router.start();
 ```
 
 ### **Contributing**

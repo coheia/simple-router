@@ -24,10 +24,18 @@ export default class SimpleRouter<C> {
   public routes: Array<Route<C>>;
 
   /**
-   * Creates an instance of SimpleRouter.
+   * Renders the specified route.
+   * @param {Route<C> | undefined} matchingRoute - The route to render.
    */
-  constructor() {
+  public render: (matchingRoute: Route<C> | undefined) => void;
+
+  /**
+   * Creates an instance of SimpleRouter.
+   * @param {SimpleRouter<C>['render']} renderMethod - The render method used by SPA.
+   */
+  constructor(renderMethod: SimpleRouter<C>['render']) {
     this.routes = [];
+    this.render = renderMethod;
   }
 
   /**
@@ -71,13 +79,5 @@ export default class SimpleRouter<C> {
     this.loadRoute(path);
 
     window.router = this;
-  }
-
-  /**
-   * Renders the specified route.
-   * @param {Route<C> | undefined} matchingRoute - The route to render.
-   */
-  public render(matchingRoute: Route<C> | undefined): void {
-    console.error("Simple Router: Implement render method.", matchingRoute);
   }
 }
