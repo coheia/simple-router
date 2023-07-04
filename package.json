@@ -11,6 +11,7 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "prepublish": "tsc",
+    "publish:major": "npm run prepublish && npm version major && npm publish",
     "publish:patch": "npm run prepublish && npm version patch && npm publish",
     "publish:minor": "npm run prepublish && npm version minor && npm publish"
   },
