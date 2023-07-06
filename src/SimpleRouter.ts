@@ -27,7 +27,7 @@ export default class SimpleRouter<C> {
    * Renders the specified route.
    * @param {Route<C> | undefined} matchingRoute - The route to render.
    */
-  public render: (matchingRoute: Route<C> | undefined) => void;
+  public render: (matchingRoute: Route<C> | undefined) => Promise<void>;
 
   /**
    * Creates an instance of SimpleRouter.

@@ -41,13 +41,11 @@ import Contact from "../pages/Contact/Contact"; // Component for page Contact
 import type { Page } from "./Page"; // The type of the component
 import { render } from "./render"; // SPA Render Method
 
-const renderMethod: SimpleRouter<Page>["render"] = (router) => {
-  if(router) {
-    render(router.component.getTemplate(), "#router");
-  } else {
-    render(new NotFound().getTemplate(), "#router");
-  }
-}
+const renderMethod: SimpleRouter<Page>['render'] = async (route): Promise<void> => {
+  const page = route ? route.component : new NotFound();
+  const pageContent = await page.render();
+  render(pageContent, '#router');
+};
 
 const router = new SimpleRouter<Page>(renderMethod);
 
