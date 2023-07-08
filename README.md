@@ -32,26 +32,33 @@ import SimpleRouter from "@coheia/simple-router";
 ### **Usage**
 
 ```typescript
-import SimpleRouter from "@coheia/simple-router";
+import SimpleRouter, { defineRenderMethod } from "@coheia/simple-router";
 
 // The following imports are not provided by SimpleRouter:
 import NotFound from "../pages/404/404"; // Component for page NotFound
 import Home from "../pages/Home/Home"; // Component for page Home
 import Contact from "../pages/Contact/Contact"; // Component for page Contact
+import Blog from "../pages/Blog/Blog"; // Component for page Blog
+import Article from "../pages/Blog/Article"; // Component for page Article
 import type { Page } from "./Page"; // The type of the component
 import { render } from "./render"; // SPA Render Method
 
-const renderMethod: SimpleRouter<Page>['render'] = async (route): Promise<void> => {
-  const page = route ? route.component : new NotFound();
-  const pageContent = await page.render();
-  render(pageContent, '#router');
-};
+// Step 1: Define the render method for the SPA
+const renderMethod = defineRenderMethod<Page>(async (route) => {
+  const page = route.component();
+  render(await page.render(), "#router");
+});
 
-const router = new SimpleRouter<Page>(renderMethod);
+// Step 2: Create an instance of SimpleRouter
+const router = new SimpleRouter<Page>(renderMethod, new NotFound());
 
-router.addRoute('/', new Home());
-router.addRoute('/contact', new Contact());
+// Step 3: Add routes to the router
+router.addRoute("/", () => new Home());
+router.addRoute("/contact", () => new Contact());
+router.addRoute("/blog", () => new Blog());
+router.addRoute("/blog/[slug]", (params) => new Article(params));
 
+// Step 4: Start the router
 router.start();
 ```
 
